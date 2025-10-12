@@ -1,0 +1,8 @@
+[ 2025-10-12 18:35:52,753 ] 164 numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+[ 2025-10-12 18:35:57,555 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[ 2025-10-12 18:35:57,559 ] 107 dagshub - INFO - Accessing as its-me-meax
+[ 2025-10-12 18:35:59,101 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/krishnaik06/networksecurity "HTTP/1.1 404 Not Found"
+[ 2025-10-12 18:35:59,104 ] 107 dagshub - INFO - Repository networksecurity doesn't exist, creating it under current user.
+[ 2025-10-12 18:36:00,064 ] 1025 httpx - INFO - HTTP Request: POST https://dagshub.com/api/v1/user/repos "HTTP/1.1 422 Unprocessable Entity"
+[ 2025-10-12 18:36:00,066 ] 163 dagshub.upload.wrapper - ERROR - Response (422):
+{"message":""}

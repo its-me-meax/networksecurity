@@ -27,11 +27,11 @@ import mlflow
 from urllib.parse import urlparse
 
 import dagshub
-#dagshub.init(repo_owner='krishnaik06', repo_name='networksecurity', mlflow=True)
+dagshub.init(repo_owner='its-me-meax', repo_name='networksecurity', mlflow=True)
 
-os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/krishnaik06/networksecurity.mlflow"
-os.environ["MLFLOW_TRACKING_USERNAME"]="krishnaik06"
-os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
+os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/its-me-meax/networksecurity.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"]="its-me-meax"
+os.environ["MLFLOW_TRACKING_PASSWORD"]="7b903ca8cc2b359a6f7dfafc07a4a5f63b813c90"
 
 
 
@@ -46,7 +46,8 @@ class ModelTrainer:
             raise NetworkSecurityException(e,sys)
         
     def track_mlflow(self,best_model,classificationmetric):
-        mlflow.set_registry_uri("https://dagshub.com/krishnaik06/networksecurity.mlflow")
+        mlflow.set_tracking_uri("https://dagshub.com/its-me-meax/networksecurity.mlflow")
+
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         with mlflow.start_run():
             f1_score=classificationmetric.f1_score
@@ -60,13 +61,14 @@ class ModelTrainer:
             mlflow.log_metric("recall_score",recall_score)
             mlflow.sklearn.log_model(best_model,"model")
             # Model registry does not work with file store
+            
             if tracking_url_type_store != "file":
 
                 # Register the model
                 # There are other ways to use the Model Registry, which depends on the use case,
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
+                mlflow.sklearn.log_model(best_model, "model", registered_model_name="NetworkSecurityModel")
             else:
                 mlflow.sklearn.log_model(best_model, "model")
 
@@ -133,14 +135,16 @@ class ModelTrainer:
         self.track_mlflow(best_model,classification_test_metric)
 
         preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
-            
-        model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
-        os.makedirs(model_dir_path,exist_ok=True)
 
-        Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
-        save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
-        #model pusher
-        save_object("final_model/model.pkl",best_model)
+        model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
+        os.makedirs(model_dir_path, exist_ok=True)
+
+        Network_Model = NetworkModel(preprocessor=preprocessor, model=best_model)
+        save_object(self.model_trainer_config.trained_model_file_path, obj=Network_Model)
+
+        os.makedirs("final_model", exist_ok=True)
+        save_object("final_model/model.pkl", best_model)
+
         
 
         ## Model Trainer Artifact
