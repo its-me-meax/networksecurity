@@ -1,19 +1,8 @@
-# Use modern Python base image
-FROM python:3.10-slim-bookworm
-
-# Set working directory
+FROM python:3.10-slim-buster
 WORKDIR /app
-
-# Copy only requirements first for caching
-COPY requirements.txt /app/
-
-# Upgrade pip and install AWS CLI + dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir awscli && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Copy rest of the project files
 COPY . /app
 
-# Default command
+RUN apt update -y && apt install awscli -y
+
+RUN apt-get update && pip install -r requirements.txt
 CMD ["python3", "app.py"]
