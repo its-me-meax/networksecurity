@@ -1,16 +1,19 @@
-FROM python:3.10-slim-buster
+# Use a stable, modern Python base image
+FROM python:3.10-slim-bookworm
 
+# Set working directory
 WORKDIR /app
-COPY . /app
 
-# Fix outdated Debian repo URLs and install awscli + requirements
-RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|security.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    apt-get update -y && \
-    apt-get install -y awscli && \
+# Copy project files
+COPY . .
+
+# Update package lists and install AWS CLI (no archived repos needed)
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends awscli && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Default command
 CMD ["python3", "app.py"]
