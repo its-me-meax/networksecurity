@@ -64,7 +64,7 @@ python test_mongodb.py
 4. Docker Setup (Optional):
 ```bash
 docker build -t networksecurity .
-docker run -p 5000:5000 networksecurity
+docker run -p 8080:8080 networksecurity
 ```
 
 ## Usage
