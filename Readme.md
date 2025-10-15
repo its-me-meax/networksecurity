@@ -21,7 +21,7 @@ networksecurity/
 
 ## Technology Stack
 
-- **Backend**: Python 3.x
+- **Backend**: Python 3.11
 - **Web Framework**: Flask (app.py)
 - **Database**: MongoDB
 - **Containerization**: Docker
